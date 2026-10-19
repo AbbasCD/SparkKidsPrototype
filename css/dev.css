@@ -1,0 +1,58 @@
+/* Development-only UI: placeholder screens, component gallery, facilitator panel.
+   None of this is part of the Figma design. */
+
+.placeholder { margin: 24px; padding: 32px 24px; border-radius: var(--radius-lg); border: 1.5px dashed var(--color-border-default); display: grid; gap: 8px; text-align: center; }
+
+.gallery { padding: 8px 0 32px; }
+.gallery__section { padding: 20px 0; border-top: 1px solid var(--color-surface-muted); }
+.gallery__h { padding: 0 24px 12px; font: 700 12px/16px var(--font-heading); color: var(--color-ink-tertiary); }
+.gallery__body { padding: 0 24px; display: grid; gap: 8px; }
+.gallery__body--flush { padding: 0; }
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.swatch { display: grid; gap: 2px; font: 400 10px/13px var(--font-body); color: var(--color-ink-secondary); }
+.swatch i { height: 36px; border-radius: 10px; box-shadow: inset 0 0 0 1px rgba(32, 32, 45, 0.08); }
+.swatch b { font-weight: 700; color: var(--color-ink-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.swatch em { font-style: normal; }
+.glass-demo { background: linear-gradient(135deg, var(--color-brand-pink) 0 50%, var(--color-brand-yellow) 50%); }
+
+/* Facilitator panel */
+.dbg {
+  position: fixed; left: 0; top: 50%; z-index: 1000;
+  transform: translate(-260px, -50%);
+  display: flex; flex-direction: row-reverse; align-items: flex-start;
+  transition: transform 250ms var(--ease-out);
+  font: 400 13px/18px var(--font-body); color: var(--color-ink-primary);
+}
+.dbg.is-open { transform: translate(0, -50%); }
+.dbg__tab {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  padding: 14px 8px; margin-top: 24px;
+  background: var(--color-ink-primary); color: var(--color-brand-yellow);
+  font: 700 12px/16px var(--font-heading); border-radius: 0 10px 10px 0;
+  border-radius: 10px 0 0 10px;
+}
+.dbg__body {
+  width: 260px; max-height: 90vh; overflow-y: auto;
+  padding: 16px; background: #fff; border-radius: 0 16px 16px 0;
+  box-shadow: 0 10px 40px rgba(32, 32, 45, 0.2);
+  display: grid; gap: 10px;
+}
+.dbg__h { font: 700 12px/16px var(--font-heading); color: var(--color-ink-tertiary); margin-top: 6px; }
+.dbg__row { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--color-surface-muted); }
+.dbg__row b { font-weight: 700; text-align: right; word-break: break-all; }
+.dbg__flows { display: grid; gap: 6px; }
+.dbg__flows button, .dbg__reset {
+  padding: 8px 12px; border-radius: 10px; text-align: left;
+  background: var(--color-surface-muted); font-weight: 600;
+}
+.dbg__flows button:hover { background: var(--color-brand-yellow-soft); }
+.dbg__select { width: 100%; padding: 8px; border-radius: 10px; border: 1px solid var(--color-border-default); background: #fff; }
+.dbg__reset { background: var(--color-status-danger-bg); color: var(--color-status-danger); text-align: center; }
+.dbg__hint { font-size: 12px; color: var(--color-ink-tertiary); }
+@media (max-width: 599px) {
+  .dbg .dbg__tab { display: none; }
+  .dbg { top: auto; bottom: 0; transform: translate(0, 110%); flex-direction: column; width: 100%; }
+  .dbg.is-open { transform: translate(0, 0); }
+  .dbg__body { width: 100%; max-height: 70vh; border-radius: 16px 16px 0 0; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
+}
+.gallery .plan-tabs-header { position: relative; }

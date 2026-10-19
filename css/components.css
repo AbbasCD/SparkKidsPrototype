@@ -1,0 +1,406 @@
+/* Component styles. Each block notes the Figma component it mirrors.
+   Measurements are taken from the component's auto-layout values. */
+
+/* ---------- System/Status bar (17:1233) · Kids/Status bar (36:3422) ---------- */
+.status-bar {
+  flex: none;
+  height: 48px; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  color: var(--color-ink-primary);
+  font: 600 15px/20px var(--font-body);
+}
+.status-bar__time { width: 31px; }
+.status-bar--kids { padding: 14px 24px; }
+
+/* ---------- Navigation/Header (17:1252): back + centred title ---------- */
+.nav-header {
+  flex: none;
+  height: 56px; padding: 0 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-header__back, .nav-header__spacer { width: 24px; height: 24px; flex: none; display: grid; place-items: center; }
+.nav-header__title {
+  flex: 1; min-width: 0; text-align: center;
+  font: 500 20px/28px var(--font-heading); color: var(--color-ink-primary);
+}
+
+/* ---------- Navigation/Top bar (21:1459) ---------- */
+.top-bar {
+  flex: none;
+  height: 52px; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.top-bar__actions { display: flex; align-items: center; gap: 4px; }
+.top-bar__btn { width: 32px; height: 32px; display: grid; place-items: center; }
+
+/* ---------- Buttons ----------
+   Hierarchy set (30:2648): Instrument Sans Bold, 2px inside stroke, pill.
+   Large 52 / Medium 44 / Small 34 tall. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  font: 700 14px/18px var(--font-button);
+  white-space: nowrap;
+  transition: opacity 120ms linear, background-color 120ms linear;
+}
+.btn--large  { height: 52px; padding: 0 30px; }   /* 32px padding incl. the 2px stroke */
+.btn--medium { height: 44px; padding: 0 22px; }
+.btn--small  { height: 34px; padding: 0 14px; }
+.btn--block  { display: flex; width: 100%; }
+
+.btn--primary   { background: var(--color-ink-primary); border-color: var(--color-ink-primary); color: var(--color-brand-yellow); }
+.btn--secondary { background: transparent; border-color: var(--color-ink-primary); color: var(--color-ink-primary); }
+.btn--secondary.btn--filled { background: var(--color-surface-card); }
+.btn--tertiary  { background: transparent; color: var(--color-ink-primary); text-decoration: underline; text-underline-offset: 2px; }
+.btn--special   { background: var(--color-brand-yellow); color: var(--color-ink-primary); font-size: 16px; line-height: 20px; }
+
+/* Pressed (State=Pressed variants) */
+.btn--primary.is-pressed   { opacity: var(--pressed-opacity); transition-duration: 0ms; }
+.btn--secondary.is-pressed { opacity: var(--pressed-opacity); background: linear-gradient(var(--pressed-overlay), var(--pressed-overlay)), var(--color-surface-background); transition-duration: 0ms; }
+.btn--tertiary.is-pressed  { opacity: var(--pressed-opacity); background: var(--pressed-overlay); transition-duration: 0ms; }
+.btn--special.is-pressed   { background: var(--color-brand-yellow-soft); transition-duration: 0ms; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.4; pointer-events: none; }
+
+/* Faktum action labels — My plan (25:7523) */
+.btn--faktum { font-family: var(--font-display); }
+.link--faktum { font-family: var(--font-display); }
+
+/* "Shared across journeys" button set (17:1260…): Lexend Bold label, 24px side padding */
+.btn--lexend { font-family: var(--font-heading); }
+.btn--lexend.btn--large { padding: 0 22px; }
+
+/* Auth/Button (32:3036): body face Bold 16/20 (Nunito Sans in Figma), 1.5px stroke on secondary */
+.btn--auth { font: 700 16px/20px var(--font-body); }
+.btn--auth.btn--secondary { border-width: 1.5px; }
+
+/* ---------- Link (18:1240): Lexend Bold 14/18, optional 24px icon ---------- */
+.link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 700 14px/18px var(--font-heading); color: var(--color-ink-primary);
+}
+.link .icon { width: 24px; height: 24px; flex: none; }
+
+/* ---------- Control/Radio (17:1288) ---------- */
+.radio { width: 24px; height: 24px; flex: none; position: relative; }
+.radio::before {
+  content: ""; position: absolute; inset: 2px; border-radius: 50%;
+  border: 2px solid var(--color-border-strong);
+}
+.radio::after {
+  content: ""; position: absolute; left: 7px; top: 7px; width: 10px; height: 10px;
+  border-radius: 50%; background: var(--color-ink-primary); transform: scale(0);
+  transition: transform 150ms var(--ease-out);
+}
+.radio.is-on::before { border-color: var(--color-ink-primary); }
+.radio.is-on::after { transform: scale(1); }
+
+/* ---------- Option card (19:1417) ---------- */
+.option-card {
+  width: 100%;
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 24px; min-height: 64px;
+  background: var(--color-surface-card);
+  border-radius: var(--radius-lg);
+  transition: background-color 150ms linear;
+}
+.option-card--bordered { border: 1px solid var(--color-border-default); }
+.option-card.is-selected { background: var(--color-brand-yellow); border: 1px solid var(--color-brand-yellow); }
+.option-card__title { flex: 1; min-width: 0; font: 700 16px/20px var(--font-heading); color: var(--color-ink-primary); }
+.option-card__detail { font: 400 14px/20px var(--font-body); color: var(--color-ink-secondary); white-space: nowrap; }
+
+/* ---------- Stepper (18:1458) ---------- */
+.stepper { display: flex; align-items: flex-start; justify-content: space-between; }
+.stepper__step { width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.stepper__label { font: 400 12px/16px var(--font-body); color: var(--color-ink-secondary); text-align: center; white-space: nowrap; }
+.stepper__step.is-current .stepper__label { font-weight: 700; color: var(--color-ink-primary); }
+.stepper__connector { width: 20px; padding-top: 17px; flex: none; }
+.stepper__connector::before { content: ""; display: block; height: 2px; background: var(--color-border-strong); }
+
+/* ---------- Note (18:1289) ---------- */
+.note { display: flex; align-items: center; gap: 12px; }
+.note .icon { width: 24px; height: 24px; flex: none; }
+.note__text { font: 400 14px/20px var(--font-body); color: var(--color-ink-secondary); }
+
+/* ---------- Chip (18:1253) & status chip (30:3401) ---------- */
+.chip {
+  display: inline-flex; align-items: center; padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font: 700 12px/16px var(--font-heading);
+}
+.chip--success { background: var(--color-status-success-bg); color: var(--color-status-success); }
+.chip--brand   { background: var(--color-brand-yellow); color: var(--color-ink-primary); }
+.chip--neutral { background: var(--color-surface-muted); color: var(--color-ink-primary); }
+.status-chip {
+  display: inline-flex; align-items: center; height: 28px; padding: 4px 12px;
+  border-radius: var(--radius-full); font: 700 12px/20px var(--font-body);
+}
+.status-chip--success { background: var(--color-status-success-bg); color: var(--color-status-success); }
+.status-chip--neutral { background: var(--color-status-neutral-bg); color: var(--color-status-neutral); }
+.status-chip--error   { background: var(--color-status-danger-bg); color: var(--color-status-danger); }
+
+/* Kids/Info chip – plain (36:3023) · shield (36:3160) */
+.info-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 28px; padding: 2px 8px 2px 4px;
+  background: var(--color-surface-card); border-radius: var(--radius-full);
+}
+.info-chip .icon { width: 20px; height: 20px; flex: none; }
+.info-chip--plain { font: 700 12px/16px var(--font-heading); text-decoration: underline; text-underline-offset: 2px; }
+.info-chip--shield { outline: 1px solid var(--color-status-success); font: 700 12px/12px var(--font-body); color: var(--color-status-success); }
+
+/* ---------- Toggle – Switch (30:3869) 64×28 ---------- */
+.toggle {
+  position: relative; width: 64px; height: 28px; flex: none;
+  border-radius: 100px; background: var(--color-toggle-off);
+  transition: background-color var(--dur-toggle) var(--ease-out);
+}
+.toggle__knob {
+  position: absolute; top: 2px; left: 2px; width: 39px; height: 24px;
+  border-radius: 100px; background: #fff;
+  transition: transform var(--dur-toggle) var(--ease-out);
+}
+/* iOS on/off glyphs drawn in the component */
+.toggle__on, .toggle__off { position: absolute; top: 9px; transition: opacity var(--dur-toggle) linear; }
+.toggle__on  { left: 12px; width: 1px; height: 10px; background: #fff; opacity: 0; }
+.toggle__off { right: 7px; width: 10px; height: 10px; border-radius: 50%; box-shadow: inset 0 0 0 1px #b3b3b3; }
+.toggle.is-on { background: var(--color-toggle-on); }
+.toggle.is-on .toggle__knob { transform: translateX(21px); }
+.toggle.is-on .toggle__on { opacity: 1; }
+.toggle.is-on .toggle__off { opacity: 0; }
+.toggle.is-pressed .toggle__knob { width: 45px; }
+.toggle.is-on.is-pressed .toggle__knob { transform: translateX(15px); }
+.toggle:focus-visible { box-shadow: var(--focus-ring); border-radius: 100px; }
+
+/* ---------- Pager dots (18:1254 & 45:4186) ---------- */
+.pager { display: flex; align-items: center; gap: 4px; }
+.pager__dot { width: 7px; height: 7px; border-radius: 4px; background: var(--color-border-default); transition: width 300ms var(--ease-in-out), background-color 300ms linear; }
+.pager__dot.is-active { width: 49px; background: var(--color-ink-primary); }
+.pager--thin .pager__dot { height: 5px; }
+
+/* ---------- Section header (21:1486) ---------- */
+.section-header { display: flex; align-items: center; gap: 8px; }
+.section-header__title { flex: 1; font: 500 20px/28px var(--font-heading); }
+
+/* ---------- Tab bar – parent (21:1395) ---------- */
+.tab-bar { height: 96px; display: flex; align-items: center; justify-content: center; }
+.tab-bar__pill {
+  width: 311px; height: 64px; padding: 4px;
+  display: flex; align-items: center; gap: 4px;
+  background: var(--color-surface-card); border-radius: var(--radius-full);
+  box-shadow: var(--shadow-tabbar);
+}
+.tab-bar__tab {
+  width: 98px; height: 56px; flex: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  border-radius: var(--radius-full);
+  font: 400 12px/16px var(--font-body); color: var(--color-ink-primary);
+}
+.tab-bar__tab .icon { width: 24px; height: 24px; }
+.tab-bar__tab.is-active { background: var(--color-brand-yellow); font-weight: 700; }
+
+/* ---------- Kids/Tab bar (45:4303) — glass pill ---------- */
+.kids-tab-bar { height: 103px; padding: 16px 24px 24px; display: flex; justify-content: center; }
+.kids-tab-bar__pill {
+  width: 306px; height: 63px; padding: 4px;
+  display: flex; align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(6px) saturate(1.4); backdrop-filter: blur(6px) saturate(1.4);
+  border-radius: 9999px; box-shadow: var(--shadow-kids-tabbar);
+}
+.kids-tab-bar__tab {
+  width: 106px; height: 55px; flex: none; padding: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border-radius: 9999px;
+  font: 400 11px/13px var(--font-system); color: #000;
+}
+.kids-tab-bar__tab + .kids-tab-bar__tab { margin-left: -10px; }
+.kids-tab-bar__tab .icon { width: 24px; height: 24px; }
+.kids-tab-bar__tab.is-active { background: var(--color-brand-yellow); color: var(--color-ink-primary); }
+
+/* ---------- Plan Select/Plan tabs (50:3704) + header (101:5909) ---------- */
+.plan-tabs-header {
+  position: sticky; top: 0; z-index: 10;
+  height: 124px; padding: 56px 0 24px 24px;
+  background: var(--color-brand-pink);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+.plan-tabs {
+  display: flex; gap: 4px;
+  overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  padding-right: 24px; /* trailing 24px wrapper around the last tab */
+  touch-action: pan-x pan-y; overscroll-behavior-x: contain;
+  cursor: grab; -webkit-user-select: none; user-select: none;
+}
+.plan-tabs.is-dragging { cursor: grabbing; }
+.plan-tabs.is-dragging .plan-tabs__tab { pointer-events: none; }
+.plan-tabs::-webkit-scrollbar { display: none; }
+.plan-tabs__tab {
+  flex: none; height: 44px; padding: 12px;
+  border-radius: 20px; background: var(--color-surface-card);
+  font: 400 14px/20px var(--font-body); color: var(--color-ink-primary);
+  box-shadow: var(--shadow-plan-tabs);
+  transition: background-color var(--dur-tab) linear, color var(--dur-tab) linear;
+}
+.plan-tabs__tab.is-selected { background: var(--color-ink-primary); color: var(--color-ink-inverse); font-weight: 700; }
+
+/* ---------- Card/Action (19:1488) ---------- */
+.action-card { padding: 16px; display: flex; flex-direction: column; gap: 12px; background: var(--color-surface-card); border-radius: var(--radius-lg); }
+.action-card__top { display: flex; align-items: center; gap: 8px; }
+.action-card__tile {
+  width: 26px; height: 28px; flex: none; display: grid; place-items: center;
+  background: var(--color-brand-yellow); border: 1px solid var(--color-ink-primary); border-radius: 8px;
+}
+.action-card__title { font: 700 16px/20px var(--font-heading); }
+.action-card__sub { font: 400 14px/20px var(--font-body); color: var(--color-ink-secondary); }
+
+/* ---------- Lists ---------- */
+/* List/Menu row (19:1447) */
+.menu-row { display: block; width: 100%; }
+.menu-row__content { display: flex; align-items: center; gap: 16px; padding: 18px 24px; }
+.menu-row__content .icon { width: 24px; height: 24px; flex: none; }
+.menu-row__label { flex: 1; font: 700 16px/20px var(--font-heading); }
+.menu-row__divider { height: 1px; background: var(--color-surface-muted); }
+/* List/Profile row (19:1458) */
+.profile-row { display: flex; align-items: center; gap: 16px; padding: 16px 24px; background: var(--color-surface-card); border-radius: var(--radius-lg); width: 100%; }
+.profile-row__text { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.profile-row__name { font: 700 16px/20px var(--font-heading); }
+.profile-row__sub { font: 400 14px/20px var(--font-body); color: var(--color-ink-secondary); }
+/* List/Summary row (19:1439) */
+.summary-row__content { display: flex; align-items: flex-start; gap: 16px; padding: 16px; }
+.summary-row__label { flex: 1; font: 400 14px/20px var(--font-body); color: var(--color-ink-secondary); }
+.summary-row__value { font: 700 14px/20px var(--font-body); color: var(--color-ink-primary); text-align: right; }
+.summary-row__divider { height: 1px; background: var(--color-surface-muted); }
+/* Kids/Check row (36:2749) */
+.check-row { display: flex; align-items: center; gap: 8px; font: 700 14px/20px var(--font-body); color: var(--color-ink-secondary); }
+.check-row .icon { width: 24px; height: 24px; flex: none; }
+
+/* ---------- Inputs ---------- */
+/* Form / Text field (30:3742) */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__label { font: 600 14px/19px var(--font-body); color: var(--color-ink-primary); }
+.field__input {
+  height: 41px; padding: 10px 12px;
+  background: var(--color-surface-card); border: 1px solid var(--color-ink-secondary); border-radius: 10px;
+  font: 400 14px/19px var(--font-body); color: var(--color-ink-primary);
+  width: 100%;
+}
+.field__input:focus { border-color: var(--color-ink-primary); box-shadow: inset 0 0 0 1px var(--color-ink-primary); }
+
+/* Auth/Field (32:3065): 50 tall, 12 radius, 17/24 text */
+.auth-field { position: relative; display: block; }
+.auth-field__input {
+  width: 100%; height: 50px; padding: 13px 48px 13px 14px;
+  background: var(--color-surface-card);
+  border: 0; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--color-ink-tertiary);
+  font: 400 17px/24px var(--font-body); color: var(--color-ink-primary);
+}
+.auth-field__input::placeholder { color: var(--color-ink-tertiary); opacity: 1; }
+.auth-field__input:focus { box-shadow: inset 0 0 0 2px var(--color-ink-primary); }
+.auth-field.is-error .auth-field__input { box-shadow: inset 0 0 0 2px var(--color-status-danger); }
+.auth-field__trail { position: absolute; right: 16px; top: 15px; width: 20px; height: 20px; }
+
+/* Auth/Code digit (32:3074) */
+.code { display: flex; gap: 6px; }
+.code__digit {
+  width: 49px; height: 46px; display: grid; place-items: center;
+  background: var(--color-surface-card); border-radius: 10px; box-shadow: inset 0 0 0 1px var(--color-ink-tertiary);
+  font: 400 15px/21px var(--font-body); color: var(--color-ink-primary);
+}
+.code.is-error .code__digit { box-shadow: inset 0 0 0 1.6px var(--color-status-danger); }
+
+/* Auth/Password rule (32:3085) · Strength meter (32:3095) */
+.pw-rule { display: flex; align-items: center; gap: 8px; font: 400 13px/18px var(--font-body); color: var(--color-ink-tertiary); }
+.pw-rule.is-met { color: var(--color-status-success); }
+.pw-rule svg { width: 18px; height: 18px; flex: none; }
+.strength { display: flex; flex-direction: column; gap: 6px; }
+.strength__bars { display: flex; gap: 6px; }
+.strength__bar { flex: 1; height: 3px; border-radius: 2px; background: var(--color-ink-tertiary); transition: background-color 200ms linear; }
+.strength.is-strong .strength__bar { background: var(--color-status-success-icon); }
+.strength__label { font: 700 12px/16px var(--font-body); color: var(--color-status-success); }
+
+/* Auth/Alert (32:3103) */
+.alert {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px;
+  background: var(--color-status-danger-bg); box-shadow: inset 0 0 0 1px var(--color-status-danger); border-radius: 12px;
+  font: 400 14px/20px var(--font-body); color: var(--color-status-danger);
+}
+.alert__msg { flex: 1; }
+.alert svg { flex: none; }
+
+/* Checkbox (30:3747) · Radio option (30:3734) */
+.checkbox, .radio-option { display: flex; align-items: center; gap: 12px; font: 400 14px/19px var(--font-body); }
+.checkbox__box {
+  width: 22px; height: 22px; flex: none; border-radius: 6px;
+  background: var(--color-surface-card); box-shadow: inset 0 0 0 1.3px var(--color-ink-primary);
+  display: grid; place-items: center;
+}
+.checkbox__box svg { opacity: 0; transition: opacity 120ms linear; }
+.checkbox.is-checked .checkbox__box { background: var(--color-brand-yellow); }
+.checkbox.is-checked .checkbox__box svg { opacity: 1; }
+.radio-option { gap: 10px; font: 600 15px/20px var(--font-body); }
+.radio-option__dot {
+  width: 22px; height: 22px; flex: none; border-radius: 11px;
+  background: var(--color-surface-card); box-shadow: inset 0 0 0 1.5px var(--color-ink-primary);
+  display: grid; place-items: center;
+}
+.radio-option__dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--color-ink-primary); transform: scale(0); transition: transform 150ms var(--ease-out); }
+.radio-option.is-selected .radio-option__dot { background: var(--color-brand-yellow); }
+.radio-option.is-selected .radio-option__dot::after { transform: scale(1); }
+
+/* ---------- Sticky footer (handover §4) ---------- */
+.footer {
+  background: var(--color-surface-background);
+  padding: 12px 16px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* ---------- Bottom sheet (handover §8.1) ---------- */
+.sheet-root { position: absolute; inset: 0; z-index: 60; }
+.sheet-scrim {
+  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.38); /* Figma scrim: #000 @38% */
+  opacity: 0; transition: opacity var(--dur-sheet-in) var(--ease-out);
+}
+.sheet {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  max-height: calc(100% - 8px);
+  display: flex; flex-direction: column;
+  background: var(--color-surface-background);
+  border-radius: 28px 28px 0 0;
+  transform: translate3d(0, 100%, 0);
+  transition: transform var(--dur-sheet-in) var(--ease-out);
+  will-change: transform;
+}
+.sheet-root.is-open .sheet-scrim { opacity: 1; }
+.sheet-root.is-open .sheet { transform: translate3d(0, 0, 0); }
+.sheet-root.is-closing .sheet-scrim { opacity: 0; transition: opacity var(--dur-sheet-out) var(--ease-in); }
+.sheet-root.is-closing .sheet { transform: translate3d(0, 100%, 0); transition: transform var(--dur-sheet-out) var(--ease-in); }
+.sheet.is-dragging { transition: none; }
+.sheet__grab { flex: none; padding-top: 8px; display: flex; justify-content: center; touch-action: none; cursor: grab; }
+.sheet__handle { width: 36px; height: 5px; border-radius: 3px; background: var(--color-border-default); }
+.sheet__header { flex: none; display: flex; align-items: center; padding: 24px 24px 16px; touch-action: none; }
+.sheet__title { flex: 1; font: 500 28px/36px var(--font-heading); }
+.sheet__close { width: 29px; height: 29px; flex: none; display: grid; place-items: center; }
+.sheet__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.sheet__body::-webkit-scrollbar { display: none; }
+
+/* Kids/Tab bar default variant (as placed on Intro plans): grey active pill */
+.kids-tab-bar__tab.is-active.is-grey { background: #ededed; color: var(--color-ink-secondary); }
+
+/* Header › Page navigation L2 (30:3315): 48px brand chevron + Medium 18/28 title */
+.page-nav { flex: none; height: 48px; margin: 0 24px; display: flex; align-items: center; }
+.page-nav__back, .page-nav__spacer { width: 48px; height: 48px; flex: none; display: flex; align-items: center; }
+.page-nav__back .icon { width: 48px; height: 48px; }
+.page-nav__back[data-tap="icon"]::before { left: 7px; margin-left: -20px; }
+.page-nav__title { flex: 1; text-align: center; font: 500 18px/28px var(--font-body); }
+
+/* Photo slots */
+.photo { display: block; object-fit: cover; background: var(--color-surface-placeholder); -webkit-user-drag: none; user-select: none; }
+.photo.is-missing { color: transparent; }
+
+/* Sheet header built from Page navigation (title=on, navigation=close, L2) */
+.sheet__header--nav { padding: 0; height: 48px; gap: 16px; }
+.sheet__header--nav .sheet__title { font: 500 18px/28px var(--font-body); }
+.sheet__close--brand { width: 48px; height: 48px; display: grid; place-items: center; }
+.sheet__close--brand svg { width: 20px; height: 20px; }
+.search input:focus-visible { box-shadow: none; border-radius: 0; }

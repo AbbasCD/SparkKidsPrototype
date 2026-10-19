@@ -1,0 +1,221 @@
+/* Bw Nista Geometric (DEMO) — body / default text face.
+   Replaces Nunito Sans everywhere --font-body is used.
+   Weight mapping from the Figma styles (Nunito Sans → Bw Nista):
+     Regular 400 → Regular · Medium 500 & SemiBold 600 → Medium · Bold 700 → Bold
+   Medium is registered for the 500–600 range so SemiBold text (status-bar time,
+   form labels, radio labels) uses Medium rather than jumping up to Bold.
+   All weights are declared; browsers only download the ones a page uses. */
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Thin.woff2") format("woff2");
+  font-weight: 250;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-ThinItalic.woff2") format("woff2");
+  font-weight: 250;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Medium.woff2") format("woff2");
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-MediumItalic.woff2") format("woff2");
+  font-weight: 500 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-ExtraBoldItalic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bw Nista Geometric";
+  src: url("../assets/fonts/BwNistaGeometric-BlackItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Faktum — display face for brand moments.
+   Figma: "RB Faktum Neue" on My plan – Safe start (25:7523); the landing carousel
+   headlines are set in it per the brand direction. See the --font-display note in tokens.css. */
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-ThinItalic.woff2") format("woff2");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-ExtraLightItalic.woff2") format("woff2");
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-RegularItalic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-MediumItalic.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-SemiBoldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Faktum";
+  src: url("../assets/fonts/Faktum-ExtraBoldItalic.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}

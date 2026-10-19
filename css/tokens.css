@@ -1,0 +1,97 @@
+/* Spark Kids — design tokens
+   Source: Figma local variables (file z9XkGTqMHbxf2lMh5B4xzU) + handover §3.
+   Pressed/focus tokens come from the "State=Pressed/Focused" variants of the
+   Button component set (Design System › Shared – sections 0, 1, 7). */
+:root {
+  /* Brand */
+  --color-brand-yellow: #f2ff4d;
+  --color-brand-yellow-strong: #e4f500;
+  --color-brand-yellow-soft: #f7ff95;
+  --color-brand-pink: #ff79e8;
+  --color-brand-pink-light: #fea7ef;
+  --color-accent-blue: #5cb5ff;
+
+  /* Ink (text) */
+  --color-ink-primary: #20202d;
+  --color-ink-secondary: #383a53;
+  --color-ink-tertiary: #5c5e73;
+  --color-ink-inverse: #ffffff;
+
+  /* Surfaces */
+  --color-surface-background: #f6f7f1;
+  --color-surface-card: #ffffff;
+  --color-surface-muted: #f2f2ee;
+  --color-surface-scrim: #20202d66;
+  --color-surface-placeholder: #595959;
+
+  /* Borders */
+  --color-border-default: #cbccc7;
+  --color-border-strong: #5d5f70;
+
+  /* Status */
+  --color-status-success: #166534;
+  --color-status-success-bg: #bbf7d0;
+  --color-status-success-icon: #16a34a;
+  --color-status-danger: #b91c1c;
+  --color-status-danger-bg: #fee2e2;
+  --color-status-neutral: #13174e;
+  --color-status-neutral-bg: #d8dafa;
+
+  /* Controls */
+  --color-toggle-on: #34c759;
+  --color-toggle-off: #3c3c434d;
+
+  /* Interaction (from Button State=Pressed / Focused variants) */
+  --pressed-overlay: rgba(0, 16, 68, 0.16);   /* #001044 @ 16% */
+  --pressed-opacity: 0.6;
+  --focus-ring: 0 0 0 2px var(--color-surface-background), 0 0 0 4px var(--color-ink-primary);
+
+  /* Elevation */
+  --shadow-tabbar: 0 6px 16px rgba(32, 32, 45, 0.16);
+  --shadow-plan-tabs: 0 4px 12px rgba(0, 16, 68, 0.10), 0 2px 4px rgba(0, 16, 68, 0.06);
+  --shadow-kids-tabbar: 0 2px 20px rgba(0, 0, 0, 0.10);
+
+  /* Spacing */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+
+  /* Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+  --radius-full: 999px;
+
+  /* Font families */
+  --font-heading: "Lexend", system-ui, sans-serif;
+  --font-body: "Bw Nista Geometric", "Nunito Sans", system-ui, sans-serif;
+  --font-button: "Instrument Sans", "Bw Nista Geometric", system-ui, sans-serif;
+  --font-system: "Roboto", system-ui, sans-serif;
+  /* Display face (Faktum) — brand and Kids "hero" moments only:
+     · Landing carousel: slide headlines and the logo taglines
+     · Kids identity: plan names, the child's name, big data figures,
+       section titles on Kids plan screens (as drawn on My plan 25:7523)
+     · My plan action labels ("Add booster", "Change plan")
+     Everything else keeps Lexend (headings), Bw Nista (body), Instrument Sans (buttons). */
+  --font-display: "Faktum", "Lexend", system-ui, sans-serif;
+
+  /* Motion (handover §7) */
+  --dur-push: 300ms;
+  --dur-dissolve: 300ms;
+  --dur-sheet-in: 300ms;
+  --dur-sheet-out: 250ms;
+  --dur-tab: 150ms;
+  --dur-toggle: 200ms;
+  --ease-out: cubic-bezier(0, 0, 0.58, 1);       /* Figma "Ease out" */
+  --ease-in: cubic-bezier(0.42, 0, 1, 1);        /* Figma "Ease in" */
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1); /* Figma "Ease in and out" */
+
+  /* Device */
+  --device-w: 375px;
+  --device-h: 812px;
+}

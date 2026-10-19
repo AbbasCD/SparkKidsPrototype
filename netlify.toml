@@ -1,0 +1,9 @@
+# Static site — no build step. Publish directory is the repo root.
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Cache-Control = "public, max-age=0, must-revalidate"
