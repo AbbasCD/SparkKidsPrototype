@@ -55,7 +55,7 @@
 
   /* Smooth scroll inside the screen — 600ms ease-in-out (§7 "scroll") */
   function scrollToEl(scroller, el) {
-    var target = Math.max(0, Math.min(el.offsetTop - 184 + offsetWithin(el, scroller), scroller.scrollHeight - scroller.clientHeight));
+    var target = Math.max(0, Math.min(el.offsetTop - (136 + sbHeight(scroller)) + offsetWithin(el, scroller), scroller.scrollHeight - scroller.clientHeight));
     var from = scroller.scrollTop, d = target - from, t0 = performance.now(), dur = 600;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { scroller.scrollTop = target; return; }
     (function step(now) {
@@ -77,6 +77,8 @@
       if (t < 1) requestAnimationFrame(step);
     })(t0);
   }
+  /* height of the top gap that replaced the status bar (16px, or the notch) */
+  function sbHeight(scroller) { var sb = scroller.querySelector(".status-bar"); return sb ? sb.offsetHeight : 0; }
   function offsetWithin(el, scroller) { // offsetTop is relative to offsetParent; add parents' offsets up to the scroller
     var extra = 0, p = el.offsetParent;
     while (p && p !== scroller && scroller.contains(p)) { extra += p.offsetTop; p = p.offsetParent; }

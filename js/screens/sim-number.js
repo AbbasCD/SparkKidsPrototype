@@ -46,7 +46,6 @@
 
   /* ---------------- Choose your number ---------------- */
   var NUMBERS = ["012-123-345", "123-345-133", "123-345-345", "012-687-123", "123-345-909", "012-345-123"];
-  var DEMO_QUERY = "123";
 
   /* Highlight the searched digits inside a formatted number (dashes ignored) */
   function highlight(num, q) {
@@ -88,8 +87,7 @@
         }).join("");
         listEl.innerHTML = rows || '<p class="numbers__empty">No numbers match those digits. Try different ones, or shuffle.</p>';
       }
-      // §7.4: tapping the search field shows the "123" search state
-      input.addEventListener("focus", function () { if (!query) { query = DEMO_QUERY; input.value = query; paint(); } });
+      // Client request: tapping the search field no longer fills in "123"; it stays blank
       input.addEventListener("input", function () { query = input.value.replace(/\D/g, ""); input.value = query; paint(); });
       ctx.el.addEventListener("click", function (e) {
         var t = e.target;
@@ -97,8 +95,7 @@
         if (t.closest("[data-shuffle]")) { list.sort(function () { return Math.random() - 0.5; }); paint(); return; }
         var row = t.closest("[data-num]");
         if (row) {
-          // §7.4: tapping a number moves to the search state; the tapped row is selected
-          if (!query) { query = DEMO_QUERY; input.value = query; }
+          // Client request: tapping a number only selects it (no "123" filled into search)
           selected = row.dataset.num; next.disabled = false; paint(); return;
         }
         if (t.closest("[data-next]") && selected) {

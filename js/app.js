@@ -115,5 +115,6 @@
   });
 
   S.router.start({ screensEl: screens, deviceEl: device, home: "/splash" });
+  S.themeColor.start(device);   // browser / phone top bar follows the page colour
   S.debug.mount();
 })(window.Spark = window.Spark || {});

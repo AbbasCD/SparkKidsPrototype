@@ -12,8 +12,9 @@
     /* System/Status bar (17:1233) · Kids/Status bar (36:3422) — static mock */
     statusBar: function (o) {
       o = o || {};
-      return '<div class="status-bar' + (o.kids ? " status-bar--kids" : "") + '" aria-hidden="true">' +
-        '<span class="status-bar__time">9:41</span>' + (o.timeOnly ? "" : I(o.kids ? "status-indicators-kids" : "status-indicators")) + "</div>";
+      /* Client request: no simulated phone status bar (time / signal / battery).
+         The element stays as a spacer for a real phone's notch (safe area) only. */
+      return '<div class="status-bar' + (o.kids ? " status-bar--kids" : "") + '" aria-hidden="true"></div>';
     },
 
     /* Navigation/Header (17:1252) */
