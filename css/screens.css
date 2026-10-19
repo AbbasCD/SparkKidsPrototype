@@ -77,12 +77,12 @@
 /* Kids – full page (1:1238). Pink layering (§8.2): MobileBG (0–248) and
    Header extension (332–410) scroll away; only the tabs header sticks. */
 .kp { position: relative; padding-bottom: 76px; }
-.kp__bg { position: absolute; left: 0; right: 0; top: 0; height: 248px; background: var(--color-brand-pink); }
-.kp__ext { position: absolute; left: 0; right: 0; top: 332px; height: 78px; background: var(--color-brand-pink); border-radius: 0 0 24px 24px; }
+.kp__bg { position: absolute; left: 0; right: 0; top: 0; height: calc(200px + var(--sb)); background: var(--color-brand-pink); }
+.kp__ext { position: absolute; left: 0; right: 0; top: calc(284px + var(--sb)); height: 78px; background: var(--color-brand-pink); border-radius: 0 0 24px 24px; }
 /* Status bar + "Select plan" header stick with the plan tabs (requested change;
    in Figma only the tabs header sticks). Tabs dock 8px under the header. */
 .kp__top { position: sticky; top: 0; z-index: 12; background: var(--color-brand-pink); }
-.kp .plan-tabs-header { top: 48px; }
+.kp .plan-tabs-header { top: var(--sb); }
 .kp .status-bar { padding-left: 48px; padding-right: 48px; } /* status bar sits inside the 24px page column */
 .kp__hero { position: relative; margin: 16px 24px 0; padding: 0 40px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
 .kp__hero p { font: 400 16px/24px var(--font-body); color: var(--color-ink-primary); }
@@ -93,7 +93,7 @@
 .kp__list { position: relative; margin: 0 24px; display: flex; flex-direction: column; gap: 20px; }
 
 /* Plan Select/Plan card (50:3979) */
-.plan-card { background: var(--color-surface-card); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px; overflow: hidden; scroll-margin-top: 184px; }
+.plan-card { background: var(--color-surface-card); border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 12px; overflow: hidden; scroll-margin-top: calc(136px + var(--sb)); }
 .plan-card > .photo { width: 100%; height: 172px; border-radius: 24px 24px 0 0; }
 .plan-card__body { padding: 0 20px 16px; display: flex; flex-direction: column; gap: 12px; }
 .plan-card__main { padding-bottom: 8px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
@@ -120,7 +120,7 @@
 .blocked-box b { font-weight: 600; color: var(--color-status-danger); }
 
 /* Plan Select/Protection summary card (50:4192) */
-.protect-card { width: 325px; max-width: 100%; align-self: center; padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--color-surface-card); border-radius: var(--radius-lg); scroll-margin-top: 184px; }
+.protect-card { width: 325px; max-width: 100%; align-self: center; padding: 24px; display: flex; flex-direction: column; gap: 12px; background: var(--color-surface-card); border-radius: var(--radius-lg); scroll-margin-top: calc(136px + var(--sb)); }
 .protect-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .protect-card__top > .icon { width: 32px; height: 32px; }
 .protect-card__badge { height: 28px; padding: 4px 12px; display: inline-flex; align-items: center; border-radius: var(--radius-full); background: var(--color-status-success-bg); color: var(--color-status-success); font: 700 12px/12px var(--font-body); }

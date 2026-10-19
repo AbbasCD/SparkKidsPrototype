@@ -1,16 +1,19 @@
 /* Component styles. Each block notes the Figma component it mirrors.
    Measurements are taken from the component's auto-layout values. */
 
-/* ---------- System/Status bar (17:1233) · Kids/Status bar (36:3422) ---------- */
+/* ---------- System/Status bar (17:1233) · Kids/Status bar (36:3422) ----------
+   Client request: the simulated time / signal / battery is removed. What is
+   left is a top gap: 16px, or the real phone's notch height if larger. */
+:root { --sb: max(16px, env(safe-area-inset-top, 0px)); }
 .status-bar {
   flex: none;
-  height: 48px; padding: 0 24px;
+  height: var(--sb); padding: 0 24px;
   display: flex; align-items: center; justify-content: space-between;
   color: var(--color-ink-primary);
   font: 600 15px/20px var(--font-body);
 }
 .status-bar__time { width: 31px; }
-.status-bar--kids { padding: 14px 24px; }
+.status-bar--kids { padding: 0 24px; }
 
 /* ---------- Navigation/Header (17:1252): back + centred title ---------- */
 .nav-header {
