@@ -192,9 +192,10 @@ a { color: inherit; text-decoration: none; }
 .native-bar .screen__fixed-bottom { padding-bottom: max(0px, calc(var(--sab) - 24px)); }
 /* Home-screen app on iOS 26: with the translucent status bar, WebKit makes the
    viewport one status-bar height short and leaves an unpainted strip at the
-   bottom (WebKit bug 301108). It gives the full screen once the page is at
-   least screen-tall, so the page is made that tall; the app itself is not
-   stretched (stretching it put buttons inside the unpainted strip). */
+   bottom (WebKit bug 301108). It reportedly gives the full screen once the page
+   is at least screen-tall: js/theme-color.js sets html's min-height to the
+   phone's real screen height. If the strip still shows, it is black (client). */
 @media (display-mode: standalone) {
-  html.native-bar { min-height: min(100lvh, calc(100% + env(safe-area-inset-top, 0px))); }
+  html.native-bar, html.native-bar body { background-color: #000 !important; }
+  .native-bar .stage { position: fixed; inset: 0; }
 }

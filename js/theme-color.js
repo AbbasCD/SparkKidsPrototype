@@ -30,9 +30,9 @@
 
   /* The first solid background under the top-centre of the app.
      See-through layers (the sheet scrim) are blended over what is under them. */
-  function sample() {
+  function sample(edge) {
     var r = device.getBoundingClientRect();
-    var x = r.left + r.width / 2, y = r.top + 2;
+    var x = r.left + r.width / 2, y = edge === "bottom" ? r.bottom - 2 : r.top + 2;
     var els = document.elementsFromPoint(x, y), tint = null;
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
@@ -50,8 +50,8 @@
      side or hidden): the last solid-background element, in paint order, that
      covers the top-centre point of that screen. Used at the start of a
      transition so the bar changes together with the screen. */
-  function sampleScreen(screen) {
-    var sr = screen.getBoundingClientRect(), x = sr.left + sr.width / 2, y = sr.top + 2, found = null;
+  function sampleScreen(screen, edge) {
+    var sr = screen.getBoundingClientRect(), x = sr.left + sr.width / 2, y = edge === "bottom" ? sr.bottom - 2 : sr.top + 2, found = null;
     var els = [screen].concat(Array.prototype.slice.call(screen.querySelectorAll("*")));
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect();
@@ -61,15 +61,30 @@
     }
     return found || { hex: hex(parse(getComputedStyle(device).backgroundColor) || [246, 247, 241]), from: "phone background" };
   }
-  /* Home-screen app: the status bar is transparent and there is no toolbar, so
-     there is nothing to colour; the page background is left alone. */
+  /* Home-screen app (iOS 26): the status bar is transparent, so the top needs
+     nothing. But iOS leaves a strip below the app (WebKit bug 301108) that
+     shows the page background — so there the page background follows the
+     BOTTOM colour of the screen instead of the top. */
   var standalone = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
-  function setBars(hexColour) {
-    meta.setAttribute("content", hexColour);
-    if (standalone) return;
+  function paintPage(hexColour) {
     var phone = !framed.matches;
     document.documentElement.style.backgroundColor = phone ? hexColour : "";
     document.body.style.backgroundColor = phone ? hexColour : "";
+  }
+  function setBars(hexColour) {
+    meta.setAttribute("content", hexColour);
+    if (!standalone) paintPage(hexColour);
+  }
+  /* WebKit bug 301108 workaround: make the page exactly as tall as the real
+     screen (screen.height is the physical screen in CSS px, unlike the short
+     innerHeight / 100vh); iOS then gives the app the full screen. */
+  function fitScreen() {
+    if (!standalone) return;
+    var h = window.matchMedia("(orientation: landscape)").matches ? Math.min(screen.width, screen.height) : Math.max(screen.width, screen.height);
+    document.documentElement.style.minHeight = h + "px";
+    // If iOS didn't hand over the full screen, undo it so the app can't scroll
+    // by the strip's height; the strip then simply stays black.
+    setTimeout(function () { if (window.innerHeight < h - 2) document.documentElement.style.minHeight = ""; }, 600);
   }
   var predicted = false, known = {};   // route → top colour seen before
   function willShow(screen) {
@@ -125,6 +140,7 @@
   S.themeColor = {
     start: function (deviceEl) {
       device = deviceEl;
+      fitScreen(); window.addEventListener("orientationchange", function () { setTimeout(fitScreen, 300); });
       meta = document.querySelector('meta[name="theme-color"]');
       if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
       S.router.willShow = willShow;   // bar changes as the transition starts
