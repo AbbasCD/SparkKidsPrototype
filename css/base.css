@@ -72,6 +72,13 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* Edge strips for Safari's bar tint (js/theme-color.js). 4px, same colour as
+   the page edge they sit on, so they can't be seen; taps pass through. */
+.tint-strip { position: fixed; left: 0; right: 0; height: 4px; z-index: 900; pointer-events: none; }
+.tint-strip--top { top: 0; }
+.tint-strip--bottom { bottom: 0; }
+@media (min-width: 600px) and (min-height: 500px) { .tint-strip { display: none; } }
+
 /* ===== Screen layers ===== */
 .screens, .overlays { position: absolute; inset: 0; }
 .overlays { pointer-events: none; z-index: 50; }
