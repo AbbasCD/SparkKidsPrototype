@@ -72,12 +72,17 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* Edge strips for Safari's bar tint (js/theme-color.js). 4px, same colour as
-   the page edge they sit on, so they can't be seen; taps pass through. */
-.tint-strip { position: fixed; left: 0; right: 0; height: 4px; z-index: 900; pointer-events: none; }
+/* Edge strips for Safari's bar tint (js/theme-color.js). Invisible
+   (opacity 0) but they carry the edge colour as their background, which
+   Safari reads even on invisible fixed elements. They still take taps on
+   purpose: Safari finds the edge element the way a tap would.
+   (8px stays clear of the sheets' top edge and of every bottom button.) */
+.tint-strip { position: fixed; left: 0; right: 0; height: 8px; z-index: 900; opacity: 0; }
 .tint-strip--top { top: 0; }
 .tint-strip--bottom { bottom: 0; }
-@media (min-width: 600px) and (min-height: 500px) { .tint-strip { display: none; } }
+/* 1px of page scroll so a scroll nudge can make Safari re-read the colour */
+body.tint-scroll { height: calc(100% + 1px); }
+@media (min-width: 600px) and (min-height: 500px) { .tint-strip { display: none; } body.tint-scroll { height: 100%; } }
 
 /* ===== Screen layers ===== */
 .screens, .overlays { position: absolute; inset: 0; }
