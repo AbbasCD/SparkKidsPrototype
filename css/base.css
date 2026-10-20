@@ -176,3 +176,22 @@ a { color: inherit; text-decoration: none; }
 /* Screens whose Figma frame fill is white (auth 2:5550…, eKYC 2:4687…) */
 .screen.screen--white { background: var(--color-surface-card); }
 .screen--white .btn--secondary.is-pressed { background: linear-gradient(var(--pressed-overlay), var(--pressed-overlay)), var(--color-surface-card); }
+
+/* ===== Native-style status bar (client's chosen version) =====
+   index.html: class "native-bar" on <html> + apple-mobile-web-app-status-bar-style
+   = black-translucent. Saved to the home screen, the page draws under a
+   transparent status bar like a native app. These rules keep content clear of
+   the notch and the home indicator. */
+.native-bar { --sat: env(safe-area-inset-top, 0px); --sab: env(safe-area-inset-bottom, 0px); }
+.native-bar:root { --sb: max(16px, var(--sat)); }
+.native-bar .kd { padding-top: calc(40px + var(--sat)); }
+.native-bar .landing__top { top: calc(24px + var(--sat)); }
+.native-bar .landing__brand { top: calc(104px + var(--sat)); }
+.native-bar .landing__dots { top: calc(216px + var(--sat)); }
+.native-bar .landing__viewport { top: calc(237px + var(--sat)); }
+.native-bar .screen__fixed-bottom { padding-bottom: max(0px, calc(var(--sab) - 24px)); }
+/* Home-screen app: fill the whole screen, under the status bar and down past
+   the home indicator (iOS can report 100% height a status bar short). */
+@media (display-mode: standalone) {
+  .native-bar .stage { position: fixed; top: 0; left: 0; right: 0; bottom: 0; min-height: 100vh; }
+}

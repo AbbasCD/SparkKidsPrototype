@@ -61,11 +61,25 @@
     }
     return found || { hex: hex(parse(getComputedStyle(device).backgroundColor) || [246, 247, 241]), from: "phone background" };
   }
+  /* Home-screen app: no Safari bars to colour (the status bar is transparent and
+     there's no toolbar), so the page background only matters if a sliver shows
+     at the bottom edge: it takes the colour of the screen's bottom instead. */
+  var standalone = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
   function setBars(hexColour) {
     meta.setAttribute("content", hexColour);
+    if (standalone) return;   // the bottom sliver is set in apply(), once the new screen is in place
     var phone = !framed.matches;
     document.documentElement.style.backgroundColor = phone ? hexColour : "";
     document.body.style.backgroundColor = phone ? hexColour : "";
+  }
+  function sampleBottom() {
+    var r = device.getBoundingClientRect(), els = document.elementsFromPoint(r.left + r.width / 2, r.bottom - 2);
+    for (var i = 0; i < els.length; i++) {
+      if (!device.contains(els[i]) || els[i].closest('[aria-hidden="true"].screen')) continue;
+      var c = parse(getComputedStyle(els[i]).backgroundColor);
+      if (c && c[3] === 1) return hex(c);
+    }
+    return hex(parse(getComputedStyle(device).backgroundColor) || [246, 247, 241]);
   }
   var predicted = false, known = {};   // route → top colour seen before
   function willShow(screen) {
@@ -93,6 +107,11 @@
   var holdUntil = 0;   // a screen announced its own colour (S.themeColor.set); don't sample mid-fade
   function apply() {
     pending = false;
+    if (standalone && !framed.matches) {
+      var bottom = sampleBottom();
+      document.documentElement.style.backgroundColor = bottom;
+      document.body.style.backgroundColor = bottom;
+    }
     if (Date.now() < holdUntil) return;
     var c = sample(), route = routeChanged, wasPredicted = predicted; routeChanged = false;
     if (route && S.router.current()) known[S.router.current()] = c.hex;

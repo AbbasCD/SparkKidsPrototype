@@ -1,0 +1,9 @@
+{
+  "name": "Spark Kids",
+  "short_name": "Spark Kids",
+  "display": "standalone",
+  "start_url": "./",
+  "scope": "./",
+  "background_color": "#f2ff4d",
+  "theme_color": "#f2ff4d"
+}
