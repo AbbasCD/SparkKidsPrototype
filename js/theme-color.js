@@ -50,6 +50,11 @@
     document.body.appendChild(el);
     return el;
   }
+  /* Safari re-reads its bar colour on page scroll: scroll 1px and straight back */
+  function nudge() {
+    window.scrollTo(0, 1);
+    requestAnimationFrame(function () { window.scrollTo(0, 0); });
+  }
   function apply() {
     pending = false;
     var c = sample("top"), b = sample("bottom");
@@ -67,6 +72,7 @@
     requestAnimationFrame(function () {
       topStrip.style.display = ""; bottomStrip.style.display = "";
       [oldTop, oldBottom].forEach(function (el) { if (el) el.remove(); });
+      nudge();
     });
   }
   function schedule() { if (!pending) { pending = true; requestAnimationFrame(apply); } }
@@ -75,6 +81,7 @@
   S.themeColor = {
     start: function (deviceEl) {
       device = deviceEl;
+      document.body.classList.add("tint-scroll");
       meta = document.querySelector('meta[name="theme-color"]');
       if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
       S.router.onChange(later);
