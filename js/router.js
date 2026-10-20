@@ -50,6 +50,7 @@
 
   function animate(incoming, outgoing, kind, dir, done, dur) {
     var t = reduced() ? "dissolve" : kind;
+    if (S.router.willShow) S.router.willShow(incoming.el);   // e.g. phone bar colour, before the animation
     if (!outgoing || t === "none") { done(); return; }
     deviceEl.classList.add("is-transitioning");
     var inEl = incoming.el, outEl = outgoing.el;
@@ -164,6 +165,7 @@
       var run = function (done) {
         if (kind === "push") return animate(incoming, outgoing, "push", "back", done);
         // dissolve back: fade the top screen out
+        if (S.router.willShow) S.router.willShow(incoming.el);
         deviceEl.classList.add("is-transitioning");
         incoming.el.removeAttribute("aria-hidden");
         outgoing.el.classList.add("is-anim", "anim-dissolve");

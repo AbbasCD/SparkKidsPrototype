@@ -46,11 +46,42 @@
     return { hex: hex(parse(getComputedStyle(device).backgroundColor) || [246, 247, 241]), from: "phone background" };
   }
 
-  function showToast(c, why) {
+  /* Top colour of a screen that is about to show (it may still be off to the
+     side or hidden): the last solid-background element, in paint order, that
+     covers the top-centre point of that screen. Used at the start of a
+     transition so the bar changes together with the screen. */
+  function sampleScreen(screen) {
+    var sr = screen.getBoundingClientRect(), x = sr.left + sr.width / 2, y = sr.top + 2, found = null;
+    var els = [screen].concat(Array.prototype.slice.call(screen.querySelectorAll("*")));
+    for (var i = 0; i < els.length; i++) {
+      var r = els[i].getBoundingClientRect();
+      if (!r.width || r.left > x || r.right < x || r.top > y || r.bottom < y) continue;
+      var c = parse(getComputedStyle(els[i]).backgroundColor);
+      if (c && c[3] === 1) found = { hex: hex(c), from: describe(els[i]) };
+    }
+    return found || { hex: hex(parse(getComputedStyle(device).backgroundColor) || [246, 247, 241]), from: "phone background" };
+  }
+  function setBars(hexColour) {
+    meta.setAttribute("content", hexColour);
+    var phone = !framed.matches;
+    document.documentElement.style.backgroundColor = phone ? hexColour : "";
+    document.body.style.backgroundColor = phone ? hexColour : "";
+  }
+  var predicted = false;
+  function willShow(screen) {
+    var c = sampleScreen(screen);
+    predicted = true;
+    if (c.hex === last) return;
+    last = c.hex; checks++;
+    setBars(c.hex);
+    showToast(c, "instant, at transition start", screen.getAttribute("data-route"));
+  }
+
+  function showToast(c, why, route) {
     if (!DEBUG) return;
     if (!toast) { toast = document.createElement("div"); toast.className = "tint-debug"; toast.setAttribute("aria-hidden", "true"); device.appendChild(toast); }
     var name = NAMES[c.hex] || "OTHER";
-    toast.innerHTML = "<b>Bar check #" + checks + "</b> · " + why + " · " + (S.router.current() || "") + "\n" +
+    toast.innerHTML = "<b>Bar check #" + checks + "</b> · build " + (window.SPARK_BUILD || "?") + " · " + why + " · " + (route || S.router.current() || "") + "\n" +
       'Top + bottom bars should be: <i style="background:' + c.hex + '"></i><b>' + name + "</b> " + c.hex + "\n" +
       "Colour taken from: " + c.from + " (top edge)";
     toast.classList.add("is-on");
@@ -60,15 +91,13 @@
 
   function apply() {
     pending = false;
-    var c = sample(), route = routeChanged; routeChanged = false;
-    if (c.hex === last && !route) return;   // nothing changed (scroll / tap with the same colour)
+    var c = sample(), route = routeChanged, wasPredicted = predicted; routeChanged = false;
+    if (route) predicted = false;
+    if (c.hex === last && (!route || wasPredicted)) return;   // nothing new (or already set at transition start)
     var changed = c.hex !== last;
     last = c.hex; checks++;
-    meta.setAttribute("content", c.hex);
-    var phone = !framed.matches;
-    document.documentElement.style.backgroundColor = phone ? c.hex : "";
-    document.body.style.backgroundColor = phone ? c.hex : "";
-    showToast(c, route ? (changed ? "screen change" : "screen change, same colour") : "colour changed");
+    setBars(c.hex);
+    showToast(c, route ? (wasPredicted ? "corrected after transition" : changed ? "screen change" : "screen change, same colour") : "colour changed");
   }
   function schedule() { if (!pending) { pending = true; requestAnimationFrame(apply); } }
   function later() { schedule(); setTimeout(schedule, 120); setTimeout(schedule, 360); }   // after transitions settle
@@ -78,6 +107,7 @@
       device = deviceEl;
       meta = document.querySelector('meta[name="theme-color"]');
       if (!meta) { meta = document.createElement("meta"); meta.name = "theme-color"; document.head.appendChild(meta); }
+      S.router.willShow = willShow;   // bar changes as the transition starts
       S.router.onChange(function () { routeChanged = true; later(); });
       device.addEventListener("scroll", schedule, true);   // any screen scrolling
       device.addEventListener("click", later, true);       // toggles, swipes, shuffles
