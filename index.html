@@ -7,11 +7,12 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <script>
     /* Build label (stamp.py) + TEMPORARY on-screen error box for phone testing */
-    window.SPARK_BUILD = "b20";
+    window.SPARK_BUILD = "b21";
     window.addEventListener("error", function (e) {
       var box = document.getElementById("spark-err");
       if (!box) { box = document.createElement("div"); box.id = "spark-err";
         box.style.cssText = "position:absolute;left:12px;right:12px;top:40%;z-index:99999;padding:12px;border-radius:12px;background:#c62828;color:#fff;font:13px/1.4 -apple-system,system-ui,sans-serif;white-space:pre-line";
+        box.addEventListener("click", function () { box.remove(); });   // tap to dismiss
         (document.body || document.documentElement).appendChild(box); }
       box.textContent += "Error (build " + window.SPARK_BUILD + "): " + e.message + "\n" + (e.filename || "").split("/").pop() + " line " + e.lineno + "\n";
     });
@@ -21,12 +22,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@600;700&family=Lexend:wght@500;700&family=Roboto:wght@400&display=swap">
   <link rel="preload" href="assets/fonts/BwNistaGeometric-Regular.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="css/fonts.css?v=b20">
-  <link rel="stylesheet" href="css/tokens.css?v=b20">
-  <link rel="stylesheet" href="css/base.css?v=b20">
-  <link rel="stylesheet" href="css/components.css?v=b20">
-  <link rel="stylesheet" href="css/screens.css?v=b20">
-  <link rel="stylesheet" href="css/dev.css?v=b20">
+  <link rel="stylesheet" href="css/fonts.css?v=b21">
+  <link rel="stylesheet" href="css/tokens.css?v=b21">
+  <link rel="stylesheet" href="css/base.css?v=b21">
+  <link rel="stylesheet" href="css/components.css?v=b21">
+  <link rel="stylesheet" href="css/screens.css?v=b21">
+  <link rel="stylesheet" href="css/dev.css?v=b21">
 </head>
 <body>
   <main class="stage">
@@ -35,26 +36,26 @@
       <div class="overlays"></div>
     </div>
   </main>
-  <script src="js/icons.js?v=b20"></script>
-  <script src="js/state.js?v=b20"></script>
-  <script src="js/model.js?v=b20"></script>
-  <script src="js/router.js?v=b20"></script>
-  <script src="js/tap.js?v=b20"></script>
-  <script src="js/components/ui.js?v=b20"></script>
-  <script src="js/components/sheet.js?v=b20"></script>
-  <script src="js/screens/_routes.js?v=b20"></script>
-  <script src="js/screens/landing.js?v=b20"></script>
-  <script src="js/screens/kids-plans.js?v=b20"></script>
-  <script src="js/screens/auth.js?v=b20"></script>
-  <script src="js/screens/sim-number.js?v=b20"></script>
-  <script src="js/screens/ekyc.js?v=b20"></script>
-  <script src="js/screens/payment.js?v=b20"></script>
-  <script src="js/screens/activation.js?v=b20"></script>
-  <script src="js/screens/kids.js?v=b20"></script>
-  <script src="js/screens/existing.js?v=b20"></script>
-  <script src="js/screens/dev-components.js?v=b20"></script>
-  <script src="js/theme-color.js?v=b20"></script>
-  <script src="js/debug.js?v=b20"></script>
-  <script src="js/app.js?v=b20"></script>
+  <script src="js/icons.js?v=b21"></script>
+  <script src="js/state.js?v=b21"></script>
+  <script src="js/model.js?v=b21"></script>
+  <script src="js/router.js?v=b21"></script>
+  <script src="js/tap.js?v=b21"></script>
+  <script src="js/components/ui.js?v=b21"></script>
+  <script src="js/components/sheet.js?v=b21"></script>
+  <script src="js/screens/routes.js?v=b21"></script>
+  <script src="js/screens/landing.js?v=b21"></script>
+  <script src="js/screens/kids-plans.js?v=b21"></script>
+  <script src="js/screens/auth.js?v=b21"></script>
+  <script src="js/screens/sim-number.js?v=b21"></script>
+  <script src="js/screens/ekyc.js?v=b21"></script>
+  <script src="js/screens/payment.js?v=b21"></script>
+  <script src="js/screens/activation.js?v=b21"></script>
+  <script src="js/screens/kids.js?v=b21"></script>
+  <script src="js/screens/existing.js?v=b21"></script>
+  <script src="js/screens/dev-components.js?v=b21"></script>
+  <script src="js/theme-color.js?v=b21"></script>
+  <script src="js/debug.js?v=b21"></script>
+  <script src="js/app.js?v=b21"></script>
 </body>
 </html>

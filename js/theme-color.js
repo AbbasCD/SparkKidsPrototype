@@ -67,9 +67,10 @@
     document.documentElement.style.backgroundColor = phone ? hexColour : "";
     document.body.style.backgroundColor = phone ? hexColour : "";
   }
-  var predicted = false;
+  var predicted = false, known = {};   // route → top colour seen before
   function willShow(screen) {
     var c = sampleScreen(screen);
+    known[screen.getAttribute("data-route")] = c.hex;
     predicted = true;
     if (c.hex === last) return;
     last = c.hex; checks++;
@@ -92,12 +93,25 @@
   function apply() {
     pending = false;
     var c = sample(), route = routeChanged, wasPredicted = predicted; routeChanged = false;
+    if (route && S.router.current()) known[S.router.current()] = c.hex;
     if (route) predicted = false;
     if (c.hex === last && (!route || wasPredicted)) return;   // nothing new (or already set at transition start)
     var changed = c.hex !== last;
     last = c.hex; checks++;
     setBars(c.hex);
     showToast(c, route ? (wasPredicted ? "corrected after transition" : changed ? "screen change" : "screen change, same colour") : "colour changed");
+  }
+  /* Finger down on a link or the back arrow: if we already know the colour of
+     the screen it leads to, switch the bars now (gains the time the finger is
+     on the glass). If nothing navigates after all, the normal check puts it back. */
+  function onPress(e) {
+    var go = e.target.closest("[data-go]"), back = e.target.closest('[data-action="back"]'), target = null;
+    if (go && !go.disabled && go.getAttribute("aria-disabled") !== "true") target = go.getAttribute("data-go");
+    else if (back) { var st = S.router.stack(); target = st[st.length - 2]; }
+    var hexColour = target && known[target];
+    if (!hexColour || hexColour === last) return;
+    last = hexColour; setBars(hexColour);
+    setTimeout(function () { if (S.router.current() !== target) { routeChanged = false; later(); } }, 700);
   }
   function schedule() { if (!pending) { pending = true; requestAnimationFrame(apply); } }
   function later() { schedule(); setTimeout(schedule, 120); setTimeout(schedule, 360); }   // after transitions settle
@@ -111,6 +125,7 @@
       S.router.onChange(function () { routeChanged = true; later(); });
       device.addEventListener("scroll", schedule, true);   // any screen scrolling
       device.addEventListener("click", later, true);       // toggles, swipes, shuffles
+      device.addEventListener("pointerdown", onPress, true);
       new MutationObserver(later).observe(device.querySelector(".overlays"), { childList: true, subtree: true, attributes: true, attributeFilter: ["class"] });
       window.addEventListener("resize", later);
       if (framed.addEventListener) framed.addEventListener("change", function () { last = ""; later(); });
