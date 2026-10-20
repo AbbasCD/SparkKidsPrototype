@@ -11,7 +11,7 @@
    TEMPORARY: a pop-up in the middle of the screen says which colour the bars
    should be and which element it came from. Turn it off with DEBUG = false. */
 (function (S) {
-  var DEBUG = true;
+  var DEBUG = false;   // client: colours confirmed on iPhone, pop-up off
   var meta, device, toast, toastTimer, last = "", pending = false, checks = 0, routeChanged = false;
   var framed = window.matchMedia("(min-width: 600px) and (min-height: 500px)");
   var NAMES = { "#f2ff4d": "YELLOW", "#ff79e8": "PINK", "#ffffff": "WHITE", "#f6f7f1": "OFF-WHITE" };
@@ -90,8 +90,10 @@
     toastTimer = setTimeout(function () { toast.classList.remove("is-on"); }, 2500);
   }
 
+  var holdUntil = 0;   // a screen announced its own colour (S.themeColor.set); don't sample mid-fade
   function apply() {
     pending = false;
+    if (Date.now() < holdUntil) return;
     var c = sample(), route = routeChanged, wasPredicted = predicted; routeChanged = false;
     if (route && S.router.current()) known[S.router.current()] = c.hex;
     if (route) predicted = false;
@@ -131,6 +133,13 @@
       if (framed.addEventListener) framed.addEventListener("change", function () { last = ""; later(); });
       routeChanged = true; later();
     },
-    sample: function () { return sample(); }
+    sample: function () { return sample(); },
+    /* A screen whose top colour fades in place (landing carousel) sets the
+       final colour itself, straight away; sampling resumes after the fade. */
+    set: function (hexColour, fadeMs) {
+      holdUntil = Date.now() + (fadeMs || 0) + 50;
+      if (hexColour !== last) { last = hexColour; checks++; setBars(hexColour); }
+      setTimeout(schedule, (fadeMs || 0) + 80);
+    }
   };
 })(window.Spark = window.Spark || {});

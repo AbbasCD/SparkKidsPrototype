@@ -80,6 +80,9 @@
       index = (i + SLIDES.length) % SLIDES.length;
       track.style.transform = "translate3d(" + (-index * 100 / 3) + "%,0,0)";
       root.classList.toggle("is-kids", SLIDES[index].key === "kids");
+      // phone / browser bar: final colour now, not after the 600ms background fade
+      if (S.themeColor && S.router.current() === "/landing")
+        S.themeColor.set(getComputedStyle(document.documentElement).getPropertyValue(SLIDES[index].key === "kids" ? "--color-brand-pink" : "--color-brand-yellow").trim().toLowerCase(), 600);
       brands.forEach(function (b, n) { b.classList.toggle("is-active", n === index); });
       dots.forEach(function (d, n) { d.classList.toggle("is-active", n === index); });
       slides.forEach(function (s, n) { s.inert = n !== index; s.setAttribute("aria-hidden", String(n !== index)); });
