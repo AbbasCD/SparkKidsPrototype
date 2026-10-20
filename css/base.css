@@ -1,6 +1,6 @@
 /* ===== Reset ===== */
 *, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; height: 100%; }
+html, body { margin: 0; padding: 0; height: 100%; overscroll-behavior: none; }
 body {
   font-family: var(--font-body);
   color: var(--color-ink-primary);
@@ -51,7 +51,10 @@ a { color: inherit; text-decoration: none; }
    Phone: the app fills the viewport. Desktop: a 375×812 device is centred
    (scaled down if the window is short) so testers see the intended size. */
 .stage {
-  position: fixed; inset: 0;
+  /* Not position: fixed — iPhone Safari (iOS 26) ignores the page background
+     for its bar colour when a full-screen fixed layer covers the edges
+     (client test, method 7). Absolute fills the viewport the same way. */
+  position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
 }
 .device {
@@ -72,17 +75,13 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-/* Edge strips for Safari's bar tint (js/theme-color.js). Invisible
-   (opacity 0) but they carry the edge colour as their background, which
-   Safari reads even on invisible fixed elements. They still take taps on
-   purpose: Safari finds the edge element the way a tap would.
-   (8px stays clear of the sheets' top edge and of every bottom button.) */
-.tint-strip { position: fixed; left: 0; right: 0; height: 8px; z-index: 900; opacity: 0; }
-.tint-strip--top { top: 0; }
-.tint-strip--bottom { bottom: 0; }
-/* 1px of page scroll so a scroll nudge can make Safari re-read the colour */
-body.tint-scroll { height: calc(100% + 1px); }
-@media (min-width: 600px) and (min-height: 500px) { .tint-strip { display: none; } body.tint-scroll { height: 100%; } }
+/* Temporary bar-colour check pop-up (js/theme-color.js) */
+.tint-debug { position: absolute; left: 16px; right: 16px; top: 50%; transform: translateY(-50%); z-index: 60; pointer-events: none;
+  padding: 12px 14px; border-radius: 14px; background: rgba(32, 32, 45, 0.92); color: #fff; font: 500 13px/1.45 var(--font-body);
+  opacity: 0; transition: opacity 200ms ease; white-space: pre-line; }
+.tint-debug.is-on { opacity: 1; }
+.tint-debug b { font-weight: 700; }
+.tint-debug i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; border: 1px solid #fff; vertical-align: -1px; margin-right: 4px; }
 
 /* ===== Screen layers ===== */
 .screens, .overlays { position: absolute; inset: 0; }
