@@ -190,8 +190,11 @@ a { color: inherit; text-decoration: none; }
 .native-bar .landing__dots { top: calc(216px + var(--sat)); }
 .native-bar .landing__viewport { top: calc(237px + var(--sat)); }
 .native-bar .screen__fixed-bottom { padding-bottom: max(0px, calc(var(--sab) - 24px)); }
-/* Home-screen app: fill the whole screen, under the status bar and down past
-   the home indicator (iOS can report 100% height a status bar short). */
+/* Home-screen app on iOS 26: with the translucent status bar, WebKit makes the
+   viewport one status-bar height short and leaves an unpainted strip at the
+   bottom (WebKit bug 301108). It gives the full screen once the page is at
+   least screen-tall, so the page is made that tall; the app itself is not
+   stretched (stretching it put buttons inside the unpainted strip). */
 @media (display-mode: standalone) {
-  .native-bar .stage { position: fixed; top: 0; left: 0; right: 0; bottom: 0; min-height: 100vh; }
+  html.native-bar { min-height: min(100lvh, calc(100% + env(safe-area-inset-top, 0px))); }
 }
